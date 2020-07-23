@@ -25,7 +25,10 @@ const CountryStyled = styled.div`
     }
 `
 
-function Country({flag, name, population, region, capital}) {
+function Country({country}) {
+
+    const {flag, name, population, region, capital} = country;
+
     return (
         <CountryStyled>
             <img src={flag} alt={name}/>

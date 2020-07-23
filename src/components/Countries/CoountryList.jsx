@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Country from './Country'
 import styled from 'styled-components'
 
@@ -11,26 +11,26 @@ const CountryListStyled = styled.div`
 `
 
 
-
-
-
 function CountryList() {
+
+    const [countries, setCountries] = useState([])
+
+    useEffect(() => {
+        fetch('https://restcountries.eu/rest/v2/all')
+            .then(res => res.json())
+            .then(data => setCountries(data))
+            .catch(err => console.error("Error when receive data", err))
+    }, [])
+
+    const renderCountries = countries.map(country => (
+            <Country 
+                country={country}
+            />
+    ))
+
     return (
         <CountryListStyled>
-            <Country 
-                flag="https://restcountries.eu/data/esp.svg"
-                name="Spain"
-                population={4600000000}
-                region="Europe"
-                capital="Madrid"
-            />
-            <Country 
-                flag="https://restcountries.eu/data/esp.svg"
-                name="Spain"
-                population={4600000000}
-                region="Europe"
-                capital="Madrid"
-            />
+            {renderCountries}
         </CountryListStyled>
     )
 }
